@@ -120,8 +120,6 @@ oee-analytics-platform/
 
 ---
 
----
-
 ## 📊 Dashboard Preview
 
 > *Screenshot placeholder — Power BI dashboard (in progress)*

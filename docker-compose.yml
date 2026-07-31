@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: oee_postgres_db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGTZ: UTC
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_oee_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - oee_network
+
+  flyway:
+    image: flyway/flyway:9-alpine
+    container_name: oee_flyway_migration
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      FLYWAY_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      FLYWAY_USER: ${POSTGRES_USER}
+      FLYWAY_PASSWORD: ${POSTGRES_PASSWORD}
+      FLYWAY_SCHEMAS: flyway,stg,dw
+      FLYWAY_DEFAULT_SCHEMA: flyway
+      FLYWAY_CONNECT_RETRIES: 10
+      FLYWAY_BASELINE_ON_MIGRATE: "true"
+    volumes:
+      - ./sql:/flyway/sql:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oee_network
+    command: migrate
+
+volumes:
+  postgres_oee_data:
+    driver: local
+
+networks:
+  oee_network:
+    driver: bridge

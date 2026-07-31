@@ -190,4 +190,4 @@ Quality      = Good Pieces / Total Pieces
 
 ---
 
-*Domain: Injection Molding Manufacturing · Inspired by a real production workflow at Polytech Industries*
+*Domain: Injection Molding Manufacturing · Inspired by a simulate production workflow at Polytech Industries*

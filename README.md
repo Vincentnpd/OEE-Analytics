@@ -190,4 +190,4 @@ Quality      = Good Pieces / Total Pieces
 
 ---
 
-*Domain: Injection Molding Manufacturing · Inspired by Framas Group production workflow*
+*Domain: Injection Molding Manufacturing · Inspired by a real production workflow at Polytech Industries*

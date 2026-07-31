@@ -120,32 +120,6 @@ oee-analytics-platform/
 
 ---
 
-## 🚀 How to Run
-
-**Prerequisites:** Docker Desktop, Python 3.11+
-
-```bash
-# 1. Clone and configure
-git clone https://github.com/YOUR_USERNAME/oee-analytics-platform.git
-cd oee-analytics-platform
-cp .env.example .env          # Fill in your credentials
-
-# 2. Start PostgreSQL + run Flyway migrations
-docker-compose up -d
-
-# 3. Install Python dependencies
-pip install psycopg2-binary pandas python-dotenv faker
-
-# 4. Generate synthetic data
-python scripts/generate_data.py
-
-# 5. Run ETL pipeline
-psql -h localhost -p 5433 -U oee_admin -d oee_db \
-  -c "CALL dw.sp_run_full_etl();"
-```
-
-**Then open** `OEE_Dashboard.pbix` in Power BI Desktop and refresh.
-
 ---
 
 ## 📊 Dashboard Preview
